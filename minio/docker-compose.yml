@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  minio-server:
+    image: "minio/minio:RELEASE.2021-07-30T00-02-00Z"
+    command:
+      - "minio"
+      - "server"
+      - "--console-address"
+      - ":9010"
+      - "/data"
+    restart: unless-stopped
+    environment:
+      MINIO_ACCESS_KEY_FILE: "/root/.minio/access_key"
+      MINIO_SECRET_KEY_FILE: "/root/.minio/secret_key"
+      MINIO_ROOT_USER_FILE: "/root/.minio/access_key"
+      MINIO_ROOT_PASSWORD_FILE: "/root/.minio/secret_key"
+    ports:
+      - "9000:9000"
+    volumes:
+      - "/volume1/minio/data:/data"
+      - "/volume1/minio/config:/root/.minio"
